@@ -1,6 +1,6 @@
 ﻿namespace MainApp
 {
-    public class StudentConverter
+    public static class StudentConverter
     {
         public static List<Student> ConvertStudents(List<Student> students)
         {
