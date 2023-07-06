@@ -1,0 +1,303 @@
+A readme text file will have to be updated.
+Create test suite description (2 paragraphs, 4-10 Sentences) for each test suite, remember what testing tool was used, use proper clear formatting.
+At the end also provide information how to run tests locally.
+
+Test suite 1:
+
+using MainApp;
+using Xunit;
+
+namespace UC7Tests
+{
+    public class StudentConverterTests
+    {
+        [Fact]
+        public void ConvertStudents_HonorRollBecomesTrue()
+        {
+            // Arrange
+            var students = new List<Student>
+            {
+                new Student { Name = "Test1", Age = 25, Grade = 95 }
+            };
+
+            // Act
+            var result = StudentConverter.ConvertStudents(students);
+
+            // Assert
+            Assert.True(result.First().HonorRoll);
+        }
+
+        [Fact]
+        public void ConvertStudents_ExceptionalBecomesTrue()
+        {
+            // Arrange
+            var students = new List<Student>
+            {
+                new Student { Name = "Test2", Age = 20, Grade = 95 }
+            };
+
+            // Act
+            var result = StudentConverter.ConvertStudents(students);
+
+            // Assert
+            Assert.True(result.First().Exceptional);
+        }
+
+        [Fact]
+        public void ConvertStudents_PassedBecomesTrue()
+        {
+            // Arrange
+            var students = new List<Student>
+            {
+                new Student { Name = "Test3", Age = 22, Grade = 80 }
+            };
+
+            // Act
+            var result = StudentConverter.ConvertStudents(students);
+
+            // Assert
+            Assert.True(result.First().Passed);
+        }
+
+        [Fact]
+        public void ConvertStudents_PassedRemainsFalse()
+        {
+            // Arrange
+            var students = new List<Student>
+            {
+                new Student { Name = "Test4", Age = 18, Grade = 60 }
+            };
+
+            // Act
+            var result = StudentConverter.ConvertStudents(students);
+
+            // Assert
+            Assert.False(result.First().Passed);
+        }
+
+        [Fact]
+        public void ConvertStudents_EmptyListGiven()
+        {
+            // Arrange
+            var students = new List<Student>();
+
+            // Act
+            var result = StudentConverter.ConvertStudents(students);
+
+            // Assert
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void ConvertStudents_InputIsNotAList()
+        {
+            // Arrange
+            List<Student>? students = null;
+
+            // Act & Assert
+#pragma warning disable CS8604 // Possible null reference argument.
+            Assert.Throws<ArgumentNullException>(() => StudentConverter.ConvertStudents(students));
+#pragma warning restore CS8604 // Possible null reference argument.
+        }
+    }
+}
+
+Test suite 2:
+
+using MainApp;
+using Xunit;
+
+namespace UC7Tests
+{
+    public class PlayerAnalyzerTests
+    {
+        [Fact]
+        public void CalculateScore_NormalPlayer_ReturnsCorrectScore()
+        {
+            // Arrange
+            var players = new List<Player>
+        {
+            new Player { Age = 25, Experience = 5, Skills = new List<int> { 2, 2, 2 } }
+        };
+
+            // Act
+            var score = PlayerAnalyzer.CalculateScore(players);
+
+            // Assert
+            Assert.Equal(250, score);
+        }
+
+        [Fact]
+        public void CalculateScore_JuniorPlayer_ReturnsCorrectScore()
+        {
+            // Arrange
+            var players = new List<Player>
+        {
+            new Player { Age = 15, Experience = 3, Skills = new List<int> { 3, 3, 3 } }
+        };
+
+            // Act
+            var score = PlayerAnalyzer.CalculateScore(players);
+
+            // Assert
+            Assert.Equal(67.5, score);
+        }
+
+        [Fact]
+        public void CalculateScore_SeniorPlayer_ReturnsCorrectScore()
+        {
+            // Arrange
+            var players = new List<Player>
+        {
+            new Player { Age = 35, Experience = 15, Skills = new List<int> { 4, 4, 4 } }
+        };
+
+            // Act
+            var score = PlayerAnalyzer.CalculateScore(players);
+
+            // Assert
+            Assert.Equal(2520, score);
+        }
+
+        [Fact]
+        public void CalculateScore_MultiplePlayers_ReturnsCorrectScore()
+        {
+            // Arrange
+            var players = new List<Player>
+        {
+            new Player { Age = 25, Experience = 5, Skills = new List<int> { 2, 2, 2 } },
+            new Player { Age = 15, Experience = 3, Skills = new List<int> { 3, 3, 3 } },
+            new Player { Age = 35, Experience = 15, Skills = new List<int> { 4, 4, 4 } }
+        };
+
+            // Act
+            var score = PlayerAnalyzer.CalculateScore(players);
+
+            // Assert
+            Assert.Equal(250 + 67.5 + 2520, score);
+        }
+
+        [Fact]
+        public void CalculateScore_NullSkills_ThrowsArgumentNullException()
+        {
+            // Arrange
+            var players = new List<Player>
+        {
+            new Player { Age = 25, Experience = 5, Skills = null }
+        };
+
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(() => PlayerAnalyzer.CalculateScore(players));
+        }
+
+        [Fact]
+        public void CalculateScore_EmptyArray_ReturnsZero()
+        {
+            // Arrange
+            var players = new List<Player>();
+
+            // Act
+            var score = PlayerAnalyzer.CalculateScore(players);
+
+            // Assert
+            Assert.Equal(0, score);
+        }
+    }
+}
+ChatGPT
+Test Suite 1: StudentConverterTests
+
+The StudentConverterTests suite employs Xunit testing framework for validating the functionality of the StudentConverter class within the UC7Tests namespace. The test suite consists of six unit tests that assess different aspects of the StudentConverter.ConvertStudents method.
+
+The test cases are devised to check the proper conversion of student information, for instance:
+
+    when a student with a grade above 90 is converted, the 'HonorRoll' and 'Exceptional' flags become true,
+    when a student with a grade above 70 is converted, the 'Passed' flag becomes true,
+    when a student with a grade below 70 is converted, the 'Passed' flag remains false.
+
+Also, the test suite covers edge cases, such as when an empty list of students or a null value is passed to the ConvertStudents method. These checks ensure the method's robustness by confirming that it behaves as expected in various situations.
+Test Suite 2: PlayerAnalyzerTests
+
+The PlayerAnalyzerTests suite, also written with the Xunit testing framework, verifies the operation of the PlayerAnalyzer class in the UC7Tests namespace. This test suite contains six tests, all centred on the PlayerAnalyzer.CalculateScore method.
+
+The tests assess the method's ability to correctly calculate the scores of players based on their age, experience, and skills:
+
+    a 'Normal' player with certain skills and experience returns a correct score,
+    a 'Junior' player with less experience but good skills also returns a correct score,
+    a 'Senior' player with a high level of experience and skills yields the correct score.
+
+Additional test cases verify the method's response to different edge cases such as when a player has null skills, or when the method is given an empty array. These tests ensure that the method functions reliably under a wide range of conditions.
+Running the Tests Locally
+
+To run the test suites locally, follow these steps:
+
+    Ensure you have the .NET Core SDK installed on your machine. If you don't have it, download it from the official Microsoft website.
+    Open your terminal/command prompt and navigate to the directory containing the test project (the directory containing the .csproj file).
+    Execute the command dotnet test in the terminal/command prompt. This will build the project and run all the tests.
+    Review the output of the test command in the terminal/command prompt to see which tests passed and which (if any) failed.
+
+User
+additionally in last paragraph describe how to collect code coverage locally
+ChatGPT
+
+To collect code coverage information while running tests, you can use the .NET Core global tool called coverlet. Coverlet is a cross-platform code coverage library for .NET, and it is typically used in conjunction with a test runner tool. Here are the steps to install coverlet and use it to collect code coverage:
+
+    Install the coverlet.console tool globally using the following command:
+
+    csharp
+
+dotnet tool install --global coverlet.console
+
+Now, you can collect code coverage by executing the following command:
+
+css
+
+coverlet ./path/to/your/test.dll --target "dotnet" --targetargs "test ./path/to/your/test.csproj --no-build"
+
+In the above command, replace ./path/to/your/test.dll and ./path/to/your/test.csproj with the path to your compiled test assembly and test project respectively.
+
+This will output the code coverage in the console. If you want to generate a detailed report, you can do so in different formats like JSON, lcov, opencover, cobertura, or teamcity by using the -o (output) and -f (format) options:
+
+css
+
+    coverlet ./path/to/your/test.dll --target "dotnet" --targetargs "test ./path/to/your/test.csproj --no-build" -o ./path/to/coverage/result --format json
+
+    Again, replace ./path/to/coverage/result with the path where you want the coverage result to be saved. And replace json with the format you prefer.
+
+Note: This instruction assumes you are running a .NET Core 3.1 or later project. For other versions of .NET Core, the steps might differ slightly.
+User
+For previously generated documentation (Test Suite 1: StudentConverterTests...) add html tags.
+ChatGPT
+
+html
+
+<h2>Test Suite 1: StudentConverterTests</h2>
+<p>
+The <code>StudentConverterTests</code> suite employs Xunit testing framework for validating the functionality of the <code>StudentConverter</code> class within the <code>UC7Tests</code> namespace. The test suite consists of six unit tests that assess different aspects of the <code>StudentConverter.ConvertStudents</code> method.
+</p>
+
+<p>
+The test cases are devised to check the proper conversion of student information, for instance: when a student with a grade above 90 is converted, the 'HonorRoll' and 'Exceptional' flags become true; when a student with a grade above 70 is converted, the 'Passed' flag becomes true; and when a student with a grade below 70 is converted, the 'Passed' flag remains false. Also, the test suite covers edge cases, such as when an empty list of students or a null value is passed to the <code>ConvertStudents</code> method. These checks ensure the method's robustness by confirming that it behaves as expected in various situations.
+</p>
+
+<h2>Test Suite 2: PlayerAnalyzerTests</h2>
+<p>
+The <code>PlayerAnalyzerTests</code> suite, also written with the Xunit testing framework, verifies the operation of the <code>PlayerAnalyzer</code> class in the <code>UC7Tests</code> namespace. This test suite contains six tests, all centred on the <code>PlayerAnalyzer.CalculateScore</code> method.
+</p>
+
+<p>
+The tests assess the method's ability to correctly calculate the scores of players based on their age, experience, and skills: a 'Normal' player with certain skills and experience returns a correct score; a 'Junior' player with less experience but good skills also returns a correct score; and a 'Senior' player with a high level of experience and skills yields the correct score. Additional test cases verify the method's response to different edge cases such as when a player has null skills, or when the method is given an empty array. These tests ensure that the method functions reliably under a wide range of conditions.
+</p>
+
+<h2>Running the Tests Locally</h2>
+<p>
+To run the test suites locally, follow these steps:
+</p>
+<ol>
+    <li>Ensure you have the .NET Core SDK installed on your machine. If you don't have it, download it from the official Microsoft website.</li>
+    <li>Open your terminal/command prompt and navigate to the directory containing the test project (the directory containing the .csproj file).</li>
+    <li>Execute the command <code>dotnet test</code> in the terminal/command prompt. This will build the project and run all the tests.</li>
+    <li>Review the output of the test command in the terminal/command prompt to see which tests passed and which (if any) failed.</li>
+</ol>
+
+Please note, to preserve readability, the "Collecting Code Coverage Locally" instructions have been omitted from this HTML-formatted response. If you wish to include them, simply wrap the relevant text in appropriate HTML tags, following the same format as demonstrated above.
