@@ -1,8 +1,8 @@
 ﻿namespace MainApp
 {
-    public class PlayerAnalyzer
+    public static class PlayerAnalyzer
     {
-        public double CalculateScore(List<Player> players)
+        public static double CalculateScore(List<Player> players)
         {
             double score = 0;
             foreach (var player in players)
