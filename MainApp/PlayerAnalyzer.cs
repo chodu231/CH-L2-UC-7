@@ -7,8 +7,8 @@
             double score = 0;
             foreach (var player in players)
             {
-                double skillsAverage = player.Skills.Sum() /
-                (double)player.Skills.Count;
+                double skillsAverage = player.Skills is not null ? player.Skills.Sum() /
+                (double)player.Skills.Count : 0; 
                 double contribution = player.Age * player.Experience *
                 skillsAverage;
                 if (player.Age < 18)
