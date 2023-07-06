@@ -2,7 +2,7 @@
 {
     public class StudentConverter
     {
-        public List<Student> ConvertStudents(List<Student> students)
+        public static List<Student> ConvertStudents(List<Student> students)
         {
             return students.Select(student =>
             {

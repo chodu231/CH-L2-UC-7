@@ -5,13 +5,6 @@ namespace UC7Tests
 {
     public class StudentConverterTests
     {
-        private StudentConverter _testSubject;
-
-        public StudentConverterTests()
-        {
-            _testSubject = new StudentConverter();
-        }
-
         [Fact]
         public void ConvertStudents_HonorRollBecomesTrue()
         {
@@ -22,7 +15,7 @@ namespace UC7Tests
             };
 
             // Act
-            var result = _testSubject.ConvertStudents(students);
+            var result = StudentConverter.ConvertStudents(students);
 
             // Assert
             Assert.True(result.First().HonorRoll);
@@ -38,7 +31,7 @@ namespace UC7Tests
             };
 
             // Act
-            var result = _testSubject.ConvertStudents(students);
+            var result = StudentConverter.ConvertStudents(students);
 
             // Assert
             Assert.True(result.First().Exceptional);
@@ -54,7 +47,7 @@ namespace UC7Tests
             };
 
             // Act
-            var result = _testSubject.ConvertStudents(students);
+            var result = StudentConverter.ConvertStudents(students);
 
             // Assert
             Assert.True(result.First().Passed);
@@ -70,7 +63,7 @@ namespace UC7Tests
             };
 
             // Act
-            var result = _testSubject.ConvertStudents(students);
+            var result = StudentConverter.ConvertStudents(students);
 
             // Assert
             Assert.False(result.First().Passed);
@@ -83,7 +76,7 @@ namespace UC7Tests
             var students = new List<Student>();
 
             // Act
-            var result = _testSubject.ConvertStudents(students);
+            var result = StudentConverter.ConvertStudents(students);
 
             // Assert
             Assert.Empty(result);
@@ -93,10 +86,12 @@ namespace UC7Tests
         public void ConvertStudents_InputIsNotAList()
         {
             // Arrange
-            List<Student> students = null;
+            List<Student>? students = null;
 
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => _testSubject.ConvertStudents(students));
+#pragma warning disable CS8604 // Possible null reference argument.
+            Assert.Throws<ArgumentNullException>(() => StudentConverter.ConvertStudents(students));
+#pragma warning restore CS8604 // Possible null reference argument.
         }
     }
 }
